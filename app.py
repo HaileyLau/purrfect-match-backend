@@ -8,10 +8,18 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+# class User(db.Model):
+#     id = db.Column(db.Integer, primary_key = True)
+#     name = db.Column(db.String(80), nullable=False)
+#     email = db.Column(db.String(120), unique = True, nullable=False)
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(80), nullable=False)
-    email = db.Column(db.String(120), unique = True, nullable=False)
+    breed = db.Column(db.String(80), nullable=False)
+    age = db.Column(db.String(80), nullable=False)
+    gender = db.Column(db.String(80), nullable=False)
+    photo = db.Column(db.String(150), nullable=False)
 
 with app.app_context():
     db.create_all()
@@ -24,11 +32,24 @@ def index():
 @app.route('/add', methods=['POST']) # CREATE
 def add_user():
     name = request.form['name']
-    email = request.form['email']
-    user = User(name=name, email=email)
-    db.session.add(user)
+    breed = request.form['breed']
+    age = request.form['age']
+    gender = request.form['gender']
+    photo = request.form['photo']
+    cat = User(name=name, breed=breed, age=age, gender=gender, photo=photo)
+    db.session.add(cat)
     db.session.commit()
     return redirect(url_for('index'))
+
+# def add_user():
+#     name = request.form['name']
+#     email = request.form['email']
+#     user = User(name=name, email=email)
+#     db.session.add(user)
+#     db.session.commit()
+#     return redirect(url_for('index'))
+
+
 
 @app.route('/update', methods=['POST']) # UPDATE
 def update_user():
