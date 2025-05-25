@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+import sqlite3
 
 app = Flask(__name__)
 
@@ -28,6 +29,21 @@ with app.app_context():
 def index():
     users = User.query.all()
     return render_template('index.html', users=users)
+
+
+# def display_data():
+#     with sqlite3.connect('data/data.db') as conn:
+#         cursor = conn.cursor()
+#         cursor.execute("SELECT * FROM CATS")
+#         users = cursor.fetchall()
+#         return users
+
+
+# @app.route('/data') # display data
+# def get_data():
+#     data = display_data()
+#     return render_template('index.html', users=data)
+
 
 @app.route('/add', methods=['POST']) # CREATE
 def add_user():
