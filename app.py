@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
-import sqlite3
 import json 
 from flask_cors import CORS
+
+
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
@@ -12,10 +13,6 @@ CORS(app)
 
 db = SQLAlchemy(app)
 
-# class User(db.Model):
-#     id = db.Column(db.Integer, primary_key = True)
-#     name = db.Column(db.String(80), nullable=False)
-#     email = db.Column(db.String(120), unique = True, nullable=False)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -25,13 +22,16 @@ class User(db.Model):
     gender = db.Column(db.String(80), nullable=False)
     photo = db.Column(db.String(150), nullable=False)
 
+
 with app.app_context():
     db.create_all()
+
 
 @app.route('/') # READ
 def index():
     users = User.query.all()
     return render_template('index.html', users=users)
+
 
 @app.route('/data/<int:id>') # GET ROW
 def get_data(id):
@@ -42,25 +42,8 @@ def get_data(id):
         formatted_data = json.dumps(data)
         print(formatted_data)
         return formatted_data
-        # return jsonify([{"name": cat.name, "age": cat.age}])
     else:
-        print("no cat:()")
         return jsonify({'error': 'no more cats'})
-
-
-
-# def display_data():
-#     with sqlite3.connect('data/data.db') as conn:
-#         cursor = conn.cursor()
-#         cursor.execute("SELECT * FROM CATS")
-#         users = cursor.fetchall()
-#         return users
-
-
-# @app.route('/data') # display data
-# def get_data():
-#     data = display_data()
-#     return render_template('index.html', users=data)
 
 
 @app.route('/add', methods=['POST']) # CREATE
@@ -75,15 +58,6 @@ def add_user():
     db.session.commit()
     return redirect(url_for('index'))
 
-# def add_user():
-#     name = request.form['name']
-#     email = request.form['email']
-#     user = User(name=name, email=email)
-#     db.session.add(user)
-#     db.session.commit()
-#     return redirect(url_for('index'))
-
-
 
 @app.route('/update', methods=['POST']) # UPDATE
 def update_user():
@@ -94,6 +68,7 @@ def update_user():
         user.email = request.form['email']
         db.session.commit()
     return redirect(url_for('index'))
+
 
 @app.route('/delete/<int:id>') # DELETE
 def delete_user(id):
