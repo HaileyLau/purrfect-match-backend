@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
-
+import json 
+from flask_cors import CORS
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+CORS(app)
 
 db = SQLAlchemy(app)
 
@@ -30,13 +33,18 @@ def index():
     users = User.query.all()
     return render_template('index.html', users=users)
 
-
 @app.route('/data/<int:id>') # GET ROW
 def get_data(id):
     cat = db.session.get(User, id)
     if cat:
-        return jsonify(cat.to_dict())
+        print("i found a cat!!")
+        data = {"name": cat.name, "age": cat.age, "breed": cat.breed, "gender": cat.gender, "photo": cat.photo}
+        formatted_data = json.dumps(data)
+        print(formatted_data)
+        return formatted_data
+        # return jsonify([{"name": cat.name, "age": cat.age}])
     else:
+        print("no cat:()")
         return jsonify({'error': 'no more cats'})
 
 
