@@ -27,7 +27,7 @@ with app.app_context():
 
 @app.route('/') # READ
 def index():
-    users = Cat.query.all()
+    users = User.query.all()
     return render_template('index.html', users=users)
 
 
@@ -70,7 +70,7 @@ def add_user():
 @app.route('/update', methods=['POST']) # UPDATE
 def update_user():
     user_id = request.form['id']
-    user = Cat.query.get(user_id)
+    user = User.query.get(user_id)
     if user:
         user.name = request.form['name']
         user.email = request.form['email']
@@ -79,7 +79,7 @@ def update_user():
 
 @app.route('/delete/<int:id>') # DELETE
 def delete_user(id):
-    user = Cat.query.get(id)
+    user = User.query.get(id)
     if user:
         db.session.delete(user)
         db.session.commit()
