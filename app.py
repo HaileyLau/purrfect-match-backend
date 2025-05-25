@@ -31,6 +31,10 @@ def index():
     return render_template('index.html', users=users)
 
 
+@app.route('/data')
+def get_data(num: int):
+    cat = db.session.execute(db.select(User)).get(num)
+
 # def display_data():
 #     with sqlite3.connect('data/data.db') as conn:
 #         cursor = conn.cursor()
@@ -84,6 +88,7 @@ def delete_user(id):
         db.session.delete(user)
         db.session.commit()
     return redirect(url_for('index'))
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
