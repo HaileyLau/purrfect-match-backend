@@ -1,0 +1,108 @@
+@import url("https://fonts.googleapis.com/css2?family=Silkscreen&display=swap");
+
+:root {
+    --red: #ff715b;
+    --yellow: #fdde89;
+    --dark-yellow: #e9bc40;
+    --gray: #e8eddf;
+    --black: #242423;
+    --purple: #634b66;
+    --light-red: #f99485;
+    --dark-red: #ee4c49;
+    --pink: #ffb8dc;
+    --card-width: min(80vw, 25rem);
+}
+
+html {
+    background-color: var(--light-red);
+}
+
+body {
+    text-align: center;
+}
+
+nav {
+    color: var(--black);
+    font-family: "Silkscreen", sans-serif;
+    font-size: 30px;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    margin-left: 40%;
+    margin-right: 40%;
+}
+
+nav ul {
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1 {
+    color: var(--red);
+    font-family: "Silkscreen", sans-serif;
+}
+
+h2 {
+    color: var(--black);
+    font-family: "Silkscreen", sans-serif;
+    font-size: 25px;
+}
+
+h3 {
+    color: var(--black);
+    font-family: "Silkscreen", sans-serif;
+    font-size: 25px;
+}
+
+h4 {
+    color: var(--black);
+    font-family: "Silkscreen", sans-serif;
+    font-size: 25px;
+}
+
+h5 {
+    color: var(--black);
+    font-family: "Silkscreen", sans-serif;
+    font-size: 25px;
+}
+
+.card {
+    display: inline-block;
+    background-color: var(--yellow);
+    border: 4px solid var(--dark-yellow);
+    border-radius: 20px;
+    height: calc(var(--card-width) * 1.4);
+    width: var(--card-width);
+}
+
+#current-card {
+    transition: 1s;
+}
+
+.swipe-button {
+    color: var(--black);
+    background-color: var(--yellow);
+    font-family: "Silkscreen", sans-serif;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.swipe-button:hover {
+    cursor: pointer;
+    background-color: var(--dark-yellow);
+}
+
+#button-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#tabs {
+    color: var(--yellow);
+    font-size: 20px;
+}
