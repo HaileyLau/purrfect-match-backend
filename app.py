@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 
@@ -31,9 +31,15 @@ def index():
     return render_template('index.html', users=users)
 
 
-@app.route('/data')
-def get_data(num: int):
-    cat = db.session.execute(db.select(User)).get(num)
+@app.route('/data/<int:id>') # GET ROW
+def get_data(id):
+    cat = db.session.get(User, id)
+    if cat:
+        return jsonify(cat.to_dict())
+    else:
+        return jsonify({'error': 'no more cats'})
+
+
 
 # def display_data():
 #     with sqlite3.connect('data/data.db') as conn:
